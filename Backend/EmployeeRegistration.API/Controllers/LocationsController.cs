@@ -17,21 +17,18 @@ public class LocationsController : ControllerBase
     [HttpGet("countries")]
     public async Task<IActionResult> GetCountries()
     {
-        var response = await _service.GetCountriesAsync();
-        return Ok(response);
+        return Ok(await _service.GetCountriesAsync());
     }
 
     [HttpGet("states")]
     public async Task<IActionResult> GetAllStates()
     {
-        var response = await _service.GetAllStatesAsync();
-        return Ok(response);
+        return Ok(await _service.GetAllStatesAsync());
     }
 
     [HttpGet("countries/{countryId}/states")]
     public async Task<IActionResult> GetStatesByCountry(int countryId)
     {
-        var response = await _service.GetStatesByCountryAsync(countryId);
-        return Ok(response);
+        return Ok(await _service.GetStatesByCountryAsync(countryId));
     }
 }
