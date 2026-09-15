@@ -1,0 +1,88 @@
+<div class="card shadow-sm mx-auto" style="max-width: 800px;">
+  <div class="card-header bg-white">
+    <h4 class="mb-0">{{ isEditMode ? 'Edit Employee' : 'Employee Registration' }}</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Employee Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="employeeName" [ngClass]="{ 'is-invalid': f['employeeName'].touched && f['employeeName'].invalid }">
+          <div class="invalid-feedback" *ngIf="f['employeeName'].errors?.['required']">Name is mandatory.</div>
+          <div class="invalid-feedback" *ngIf="f['employeeName'].errors?.['pattern']">Allows only alphabets.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" formControlName="dob" [ngClass]="{ 'is-invalid': f['dob'].touched && f['dob'].invalid }">
+          <div class="invalid-feedback" *ngIf="f['dob'].errors?.['futureDate']">Future dates are not allowed.</div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Age <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="age" [ngClass]="{ 'is-invalid': f['age'].touched && f['age'].invalid }">
+          <div class="invalid-feedback" *ngIf="f['age'].errors?.['required']">Age is mandatory.</div>
+          <div class="invalid-feedback" *ngIf="f['age'].errors?.['pattern']">Allows only numbers, min 1 digit, max 3 digits.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="mobileNum" [ngClass]="{ 'is-invalid': f['mobileNum'].touched && f['mobileNum'].invalid }">
+          <div class="invalid-feedback" *ngIf="f['mobileNum'].errors?.['required']">Mobile number is mandatory.</div>
+          <div class="invalid-feedback" *ngIf="f['mobileNum'].errors?.['pattern']">Must be 10 digits.</div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
+          <textarea class="form-control" formControlName="addressLine1" rows="2" [ngClass]="{ 'is-invalid': f['addressLine1'].touched && f['addressLine1'].invalid }"></textarea>
+          <div class="invalid-feedback" *ngIf="f['addressLine1'].errors?.['required']">Address Line 1 is mandatory.</div>
+          <div class="invalid-feedback" *ngIf="f['addressLine1'].errors?.['specialChars']">Should not allow $, %, !, +</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Address Line 2</label>
+          <textarea class="form-control" formControlName="addressLine2" rows="2" [ngClass]="{ 'is-invalid': f['addressLine2'].touched && f['addressLine2'].invalid }"></textarea>
+          <div class="invalid-feedback" *ngIf="f['addressLine2'].errors?.['specialChars']">Should not allow $, %, !, +</div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Pincode <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="pincode" [ngClass]="{ 'is-invalid': f['pincode'].touched && f['pincode'].invalid }">
+          <div class="invalid-feedback" *ngIf="f['pincode'].errors?.['required']">Pincode is mandatory.</div>
+          <div class="invalid-feedback" *ngIf="f['pincode'].errors?.['pattern']">Must be 6 digits.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Country <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="countryId" [ngClass]="{ 'is-invalid': f['countryId'].touched && f['countryId'].invalid }">
+            <option value="">Select Country</option>
+            <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+          </select>
+          <div class="invalid-feedback">Country is mandatory.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">State <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="stateId" [ngClass]="{ 'is-invalid': f['stateId'].touched && f['stateId'].invalid }">
+            <option value="">Select State</option>
+            <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
+          </select>
+          <div class="invalid-feedback">State is mandatory.</div>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-end gap-2">
+        <a routerLink="/employees" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">{{ isEditMode ? 'Update' : 'Register' }}</button>
+      </div>
+
+    </form>
+  </div>
+</div>
